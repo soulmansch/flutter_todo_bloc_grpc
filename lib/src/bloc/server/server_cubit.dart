@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_todo_bloc_grpc/src/bloc/tasks/tasks_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:grpc/grpc.dart';
 
 import '../../util/constants/enums.dart';
@@ -13,7 +15,7 @@ class ServerCubit extends Cubit<ServerState> {
   int port;
   ClientChannel? _channel;
 
-  ServerCubit({this.host = "192.168.100.3", this.port = 56643})
+  ServerCubit({this.host = "192.168.100.3", this.port = 62830})
       : super(const ServerState(ServerStatusEnum.connecting));
 
   ClientChannel? get channel => _channel;
@@ -69,6 +71,9 @@ class ServerCubit extends Cubit<ServerState> {
       };
       // TODO remove the line bellow
       emit(const ServerState(ServerStatusEnum.connected));
+      try {
+        GetIt.instance.get<TasksBloc>().initiateStream();
+      } catch (e) {}
     } catch (e) {
       print('Connection error: $e');
     }

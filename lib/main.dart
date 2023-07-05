@@ -6,6 +6,8 @@ import 'package:flutter_todo_bloc_grpc/src/views/app.dart';
 import 'package:get_it/get_it.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   // Initialize GetIt for dependency injection
   final getIt = GetIt.instance;
 

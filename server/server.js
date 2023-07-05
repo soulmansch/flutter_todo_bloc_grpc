@@ -72,15 +72,15 @@ function deleteTask(call, callback) {
 
 // StreamUpdates RPC method
 function streamUpdates(call) {
-  // Send all existing tasks to the newly connected client
-  tasks.forEach((task) => call.write(task));
-
   // Add the client to the list of active connections
   const client = {
     call,
     taskUpdates: [],
   };
   activeConnections.push(client);
+
+  // Send all existing tasks to the newly connected client
+  tasks.forEach((task) => client.call.write(task));
 
   // Handle client disconnection
   call.on("end", () => {
@@ -160,13 +160,13 @@ async function startServer() {
   );
 
   // Graceful shutdown
-  process.on("SIGINT", () => {
-    console.log("Shutting down server...");
-    server.tryShutdown(() => {
-      console.log("Server gracefully stopped.");
-      process.exit(0);
-    });
-  });
+  // process.on("SIGINT", () => {
+  //   console.log("Shutting down server...");
+  //   server.tryShutdown(() => {
+  //     console.log("Server gracefully stopped.");
+  //     process.exit(0);
+  //   });
+  // });
 }
 
 startServer();

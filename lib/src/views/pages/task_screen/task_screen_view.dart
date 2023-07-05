@@ -33,7 +33,7 @@ class TaskScreen extends StatelessWidget {
             },
             icon: const Icon(
               Icons.edit,
-              color: Colors.grey,
+              color: Colors.white,
             ),
           ),
           IconButton(

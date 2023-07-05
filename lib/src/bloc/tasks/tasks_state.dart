@@ -13,6 +13,11 @@ class TasksLoaded extends TasksState {
   final List<TaskModel> tasks;
 
   const TasksLoaded(this.tasks);
+  @override
+  List<Object> get props => [tasks];
+
+  @override
+  bool? get stringify => true;
 }
 
 class TasksError extends TasksState {

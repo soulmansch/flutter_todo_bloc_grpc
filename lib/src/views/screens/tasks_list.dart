@@ -16,7 +16,7 @@ class TaskListWidget extends StatefulWidget {
 class _TaskListWidgetState extends State<TaskListWidget> {
   @override
   void initState() {
-    // GetIt.instance.get<TasksBloc>().add(GetTasksEvent());
+    GetIt.instance.get<TasksBloc>().add(GetTasksEvent());
     super.initState();
   }
 
