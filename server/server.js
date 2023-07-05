@@ -91,6 +91,7 @@ function streamUpdates(call) {
     }
   });
 }
+
 function getTasks(call, callback) {
   const taskList = { tasks: tasks };
   callback(null, taskList);
@@ -122,6 +123,7 @@ function getIpAddress() {
 
   return "localhost";
 }
+
 // Get free ports
 function getFreePort() {
   return new Promise((resolve, reject) => {
@@ -136,7 +138,7 @@ function getFreePort() {
 }
 
 // Start the gRPC server
-async function main() {
+async function startServer() {
   const server = new grpc.Server();
   server.addService(taskItemProto.TaskService_grpc.service, taskService);
   const host = process.argv[2] || getIpAddress();
@@ -145,27 +147,26 @@ async function main() {
   server.bindAsync(
     `${host}:${port}`,
     grpc.ServerCredentials.createInsecure(),
-    (err, port) => {
-      if (err) {
-        console.error(`Failed to bind to ${host}:${port}. Error: ${err}`);
+    (error, p) => {
+      if (error) {
+        console.error("Failed to bind:", error);
         return;
       }
-
-      console.log(`Server running at http://${host}:${port}`);
-
-      //   // Event listener for client connections
-      //   server.on("connect", (socket) => {
-      //     console.log("Client connected");
-      //   });
-
-      //   // Event listener for client disconnections
-      //   server.on("disconnect", (socket) => {
-      //     console.log("Client disconnected");
-      //   });
+      console.log(`Server bound to ${host}:${port}`);
 
       server.start();
+      console.log(`Server running at http://${host}:${port}`);
     }
   );
+
+  // Graceful shutdown
+  process.on("SIGINT", () => {
+    console.log("Shutting down server...");
+    server.tryShutdown(() => {
+      console.log("Server gracefully stopped.");
+      process.exit(0);
+    });
+  });
 }
 
-main();
+startServer();
