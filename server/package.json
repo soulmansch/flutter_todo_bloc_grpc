@@ -1,0 +1,16 @@
+{
+  "name": "todo_grpc",
+  "version": "1.0.0",
+  "description": "Flutter Technical Assignment -  ByteLeap Software Ltd. DBA PokerLab",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js $npm_config_host $npm_config_port",
+    "test": "node server_test.js"
+  },
+  "dependencies": {
+    "@grpc/proto-loader": "^0.7.7",
+    "grpc": "^1.24.11"
+  },
+  "author": "Souleimane",
+  "license": "ISC"
+}

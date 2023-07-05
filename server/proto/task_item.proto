@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package todo_grpc;
+
+message EmptyMessage_grpc {
+}
+
+message Timestamp_grpc {
+  int64 seconds = 1;
+  int32 nanos = 2;
+}
+
+
+// Task status enum
+enum TaskStatus_grpc {
+  TASK_STATUS_PENDING = 0;
+  TASK_STATUS_COMPLETED = 1;
+}
+
+message TaskItem_grpc {
+  string id = 1;
+  string title = 2;
+  string content = 3;
+  TaskStatus_grpc status = 4;
+  Timestamp_grpc created = 5;
+  Timestamp_grpc last_modified = 6;
+}
+
+message DeleteTaskResponse {
+  TaskItem_grpc deleted_task = 1;
+}
+
+ 
+
+message TaskList {
+  repeated TaskItem_grpc tasks = 1;
+}
+
+service TaskService_grpc {
+  rpc CreateTask(TaskItem_grpc) returns (TaskItem_grpc);
+  rpc UpdateTask(TaskItem_grpc) returns (TaskItem_grpc);
+  rpc DeleteTask(TaskItem_grpc) returns (DeleteTaskResponse);
+  rpc StreamUpdates(EmptyMessage_grpc) returns (stream TaskList);
+  rpc GetTasks(EmptyMessage_grpc) returns (TaskList);
+
+}
