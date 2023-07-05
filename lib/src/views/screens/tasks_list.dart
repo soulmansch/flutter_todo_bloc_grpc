@@ -47,6 +47,7 @@ class _TaskListWidgetState extends State<TaskListWidget> {
             );
           } else if (state is TasksError) {
             // Show an error message
+            print(state.error);
             return Center(
               child: Text(state.error),
             );

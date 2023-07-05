@@ -13,7 +13,7 @@ class ServerCubit extends Cubit<ServerState> {
   int port;
   ClientChannel? _channel;
 
-  ServerCubit({this.host = "127.0.0.1", this.port = 50053})
+  ServerCubit({this.host = "localhost", this.port = 56294})
       : super(const ServerState(ServerStatusEnum.connecting));
 
   ClientChannel? get channel => _channel;
