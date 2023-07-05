@@ -13,7 +13,7 @@ class ServerCubit extends Cubit<ServerState> {
   int port;
   ClientChannel? _channel;
 
-  ServerCubit({this.host = "localhost", this.port = 56294})
+  ServerCubit({this.host = "192.168.100.3", this.port = 56643})
       : super(const ServerState(ServerStatusEnum.connecting));
 
   ClientChannel? get channel => _channel;
@@ -22,8 +22,6 @@ class ServerCubit extends Cubit<ServerState> {
     await closeChannel();
     const options = ChannelOptions(
       credentials: ChannelCredentials.insecure(),
-      // idleTimeout: Duration(seconds: 10),
-      // connectionTimeout: Duration(seconds: 10),
     );
     _channel = ClientChannel(
       host,

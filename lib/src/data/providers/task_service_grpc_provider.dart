@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter_todo_bloc_grpc/src/util/functions/general_functions.dart';
 import 'package:get_it/get_it.dart';
+import 'package:grpc/grpc.dart';
 
 import '../../bloc/server/server_cubit.dart';
 import '../models/task_model.dart';
@@ -11,7 +12,8 @@ class TaskDataProvider {
 
   TaskDataProvider() {
     final channel = GetIt.instance.get<ServerCubit>().channel;
-    client = TaskService_grpcClient(channel!);
+    client = TaskService_grpcClient(channel!,
+        options: CallOptions(timeout: const Duration(seconds: 10)));
   }
 
   Stream<TaskModel> getTasksStream() {
