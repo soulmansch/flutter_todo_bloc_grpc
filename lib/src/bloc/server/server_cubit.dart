@@ -15,7 +15,7 @@ class ServerCubit extends Cubit<ServerState> {
   int port;
   ClientChannel? _channel;
 
-  ServerCubit({this.host = "192.168.100.3", this.port = 62830})
+  ServerCubit({this.host = "192.168.100.3", this.port = 63936})
       : super(const ServerState(ServerStatusEnum.connecting));
 
   ClientChannel? get channel => _channel;
@@ -69,8 +69,8 @@ class ServerCubit extends Cubit<ServerState> {
         emit(ServerState(status));
         print('Connection state changed: ${status.name}');
       };
-      // TODO remove the line bellow
-      emit(const ServerState(ServerStatusEnum.connected));
+      // // TODO remove the line bellow
+      // emit(const ServerState(ServerStatusEnum.connected));
       try {
         GetIt.instance.get<TasksBloc>().initiateStream();
       } catch (e) {}
